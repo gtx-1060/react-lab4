@@ -1,0 +1,60 @@
+$dark: #1f1f29;
+
+.header {
+  margin-bottom: 50px;
+  margin-top: -1px;
+  color: #d6e1eb;
+  background: $dark !important;
+}
+
+.login-card {
+  max-width: 300px !important;
+  display: flex;
+  justify-content: center;
+  padding: 40px 30px;
+  margin: auto;
+}
+
+.common-card {
+  padding: 25px;
+}
+
+.graph-canvas {
+  padding: 10px;
+  height: min-content;
+}
+
+.result-table {
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+  width: 100%;
+  border-collapse: collapse;
+  border: 2px solid $dark;
+  color: $dark;
+  font-size: 15px;
+
+  tbody, thead {
+    display: table;
+    width: 100%;
+  }
+  td {
+    padding: 15px 15px;
+  }
+}
+
+.graph-block {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.content {
+  max-width: 80%;
+  margin: auto;
+}
+
+.colored-text {
+  color: #1890ff;
+}
