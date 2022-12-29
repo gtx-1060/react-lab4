@@ -57,11 +57,11 @@ const pointSlice = createSlice({
             console.log(`store: r changed to ${state.currentPoint.r}`);
         }
     },
-    extraReducers: {
-        [fetchPoints.fulfilled]: (state, action) => {
+    extraReducers: (builder) => { builder
+        .addCase(fetchPoints.fulfilled, (state, action) => {
             state.points = action.payload;
-        },
-        [sendPoint.fulfilled]: (state, action) => {}
+        })
+        .addCase(sendPoint.fulfilled, (state, action) => {})
     }
 });
 
