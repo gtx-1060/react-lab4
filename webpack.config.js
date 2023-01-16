@@ -5,6 +5,8 @@ module.exports = {
     output: {
         path: path.join(__dirname, "/dist"), // the bundle output path
         filename: "bundle.js", // the name of the bundle
+        assetModuleFilename: 'assets/images/[name][ext]',
+        publicPath: "/",
     },
     plugins: [
         new HtmlWebpackPlugin({
@@ -14,6 +16,7 @@ module.exports = {
     ],
     devServer: {
         port: 8080, // you can change the port
+        historyApiFallback: true
     },
     module: {
         rules: [
@@ -41,9 +44,8 @@ module.exports = {
                 ],
             },
             {
-                test: /\.(png|woff|woff2|eot|ttf|svg)$/, // to import images and fonts
-                loader: "url-loader",
-                options: { limit: false },
+                test: /\.(png|svg|jpg|jpeg|gif)$/i,
+                type: 'asset/resource',
             },
         ],
     },

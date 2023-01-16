@@ -3,12 +3,9 @@ import styles from '../common.module.scss'
 import IconButton from "react-toolbox/lib/button";
 
 const RadioIconGroup = (props) => {
-    const elements = [...new Set(props.values)]
-    const [active, setActive] = useState(props.values[0]);
     const handleClick = (value) => {
-        if (value===active)
+        if (value===props.chosen)
             return;
-        setActive(value);
         props.onChange(value);
     };
     return (
@@ -19,8 +16,8 @@ const RadioIconGroup = (props) => {
                 flexWrap: "wrap",
                 gap: 10
             }}>
-                {elements.map(value => (
-                    <IconButton key={value} primary={active===value} mini floating
+                {props.values.map(value => (
+                    <IconButton key={value} primary={props.chosen===value} mini floating
                                 onMouseUp={(e) => handleClick(value)}>
                         {value}
                     </IconButton>

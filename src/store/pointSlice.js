@@ -1,11 +1,15 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import {getErrorText} from "../utils";
 
 export const fetchPoints = createAsyncThunk(
     'points/fetchPoints',
-    async () => {
+    async (_, {getState, rejectWithValue, dispatch}) => {
         const response = await fetch('http://localhost:3030/api/points', {
-            mode: 'cors'
+            credentials: 'include',
+            method: 'GET'
         });
+        if (!response.ok)
+                return rejectWithValue({text: await response.text(), code: response.status});
         return await response.json();
     }
 );
@@ -16,14 +20,15 @@ export const sendPoint = createAsyncThunk(
         const point = getState().points.currentPoint;
         console.log(point);
         const response = await fetch( 'http://localhost:3030/api/points', {
-            method: 'put',
+            method: 'PUT',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(point)
         });
         if (!response.ok)
-            return rejectWithValue("error");
+            return rejectWithValue({text: await response.text(), code: response.status});
         dispatch(addPoint(await response.json()))
     }
 );
@@ -35,35 +40,52 @@ const pointSlice = createSlice({
         currentPoint: {
             x: '-3',
             y: '0',
-            r: '1'
-        }
+            r: '1',
+            windowWidth: 0
+        },
+        error: null
     },
     reducers: {
+        clearError(state, action) {
+            state.error = null;
+        },
         addPoint(state, action) {
             console.log("addPoint")
             console.log(action.payload)
             state.points.unshift(action.payload);
         },
         changeCurrentX(state, action) {
+            console.log(`store: x before ${state.currentPoint.x}`);
             state.currentPoint.x = action.payload.x;
             console.log(`store: x changed to ${state.currentPoint.x}`);
         },
         changeCurrentY(state, action) {
+            console.log(`store: y before ${state.currentPoint.y}`);
             state.currentPoint.y = action.payload.y ?? "";
             console.log(`store: y changed to ${state.currentPoint.y}`);
         },
         changeCurrentR(state, action) {
+            console.log(`store: r before ${state.currentPoint.r}`);
             state.currentPoint.r = action.payload.r;
             console.log(`store: r changed to ${state.currentPoint.r}`);
+        },
+        changeWindowWidth(state, action) {
+            state.currentPoint.windowWidth = action.payload.windowWidth;
         }
     },
-    extraReducers: (builder) => { builder
-        .addCase(fetchPoints.fulfilled, (state, action) => {
+    extraReducers: (builder) => {
+        builder.addCase(fetchPoints.fulfilled, (state, action) => {
             state.points = action.payload;
+            state.fetchingError = null;
         })
-        .addCase(sendPoint.fulfilled, (state, action) => {})
+        builder.addCase(fetchPoints.rejected, (state, action) => {
+            state.error = action.payload;
+        })
+        builder.addCase(sendPoint.rejected, (state, action) => {
+            state.error = action.payload
+        })
     }
 });
 
-export const { addPoint, changeCurrentX, changeCurrentY, changeCurrentR } = pointSlice.actions;
+export const { addPoint, changeCurrentX, changeCurrentY, changeCurrentR, changeWindowWidth, clearError } = pointSlice.actions;
 export default pointSlice.reducer
