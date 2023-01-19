@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from "react";
 import styles from '../common.module.scss'
 import {useDispatch, useSelector} from "react-redux";
 import {changeCurrentX, changeCurrentY, changeWindowWidth, sendPoint} from "../store/pointSlice";
-import {getFrame, draw, drawDot, defaultColor, hitColor} from "../utils";
+import {getFrame, drawCoordinatePlane, drawDot, defaultColor, hitColor} from "../utils";
 import StatusDisplay from "./StatusDisplay";
 
 const Graph = (props) => {
@@ -42,7 +42,7 @@ const Graph = (props) => {
             props.imageElement.width * k,   // width
             props.imageElement.height * k    // height
         );
-        draw(context, activeFrame, currentPoint.r);
+        drawCoordinatePlane(context, activeFrame, currentPoint.r);
         points.forEach((e) => {
             drawDot(
                 context,

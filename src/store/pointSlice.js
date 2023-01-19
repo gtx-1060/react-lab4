@@ -1,10 +1,10 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {getErrorText} from "../utils";
+import {apiHost} from "../utils";
 
 export const fetchPoints = createAsyncThunk(
     'points/fetchPoints',
     async (_, {getState, rejectWithValue, dispatch}) => {
-        const response = await fetch('http://localhost:3030/api/points', {
+        const response = await fetch(`${apiHost}/api/points`, {
             credentials: 'include',
             method: 'GET'
         });
@@ -19,7 +19,7 @@ export const sendPoint = createAsyncThunk(
     async (_, {getState, rejectWithValue, dispatch}) => {
         const point = getState().points.currentPoint;
         console.log(point);
-        const response = await fetch( 'http://localhost:3030/api/points', {
+        const response = await fetch( `${apiHost}/api/points`, {
             method: 'PUT',
             credentials: 'include',
             headers: {

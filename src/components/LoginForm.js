@@ -6,6 +6,7 @@ import Card from 'react-toolbox/lib/card';
 import styles from '../common.module.scss'
 import StatusDisplay from "./StatusDisplay";
 import {useNavigate} from "react-router-dom";
+import {apiHost} from "../utils";
 
 const LoginForm = () => {
     const [error, setError] = useState("");
@@ -27,7 +28,7 @@ const LoginForm = () => {
 
     const onLoginClick = async () => {
         const response = await fetch(
-            "http://localhost:3030/auth/login",
+            `${apiHost}/auth/login`,
             {
                 credentials: 'include',
                 method: 'POST',
@@ -50,7 +51,7 @@ const LoginForm = () => {
             "password": password
         };
         const response =  await fetch(
-            "http://localhost:3030/api/users",
+            `${apiHost}/api/users`,
             {
                 method: 'put',
                 headers: {

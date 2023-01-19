@@ -1,3 +1,7 @@
+// host options
+const apiHost = "http://localhost:3030"
+
+// color options
 const figuresColor = "#96aae7"
 const defaultColor = "#3c3c4d"
 const hitColor = "#de0d45"
@@ -10,7 +14,7 @@ function drawDot(ctx, x, y, color) {
     ctx.closePath();
 }
 
-function draw(ctx, frame, r) {
+function drawCoordinatePlane(ctx, frame, r) {
     ctx.strokeStyle = defaultColor
     ctx.lineWidth = 2
     ctx.font = "15px serif";
@@ -94,4 +98,4 @@ function getFrame() {
     return {sizeX, sizeY, centerX, centerY, halfRX, halfRY}
 }
 
-export {getFrame, draw, drawDot, defaultColor, hitColor}
+export {getFrame, drawCoordinatePlane, drawDot, defaultColor, hitColor, apiHost}

@@ -24,7 +24,7 @@ const Header = (props) => {
                 <CardTitle
                     avatar="https://placeimg.com/80/80/animals"
                     title="Ненов Владислав"
-                    subtitle="Группа 32082, Вариант 5613"
+                    subtitle="Группа 32082, Вариант 7657"
                 />
                 {
                     props.showExit &&
