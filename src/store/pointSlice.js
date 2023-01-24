@@ -14,6 +14,19 @@ export const fetchPoints = createAsyncThunk(
     }
 );
 
+export const fetchUsersPoints = createAsyncThunk(
+    'points/fetchUsersPoints',
+    async (username, {getState, rejectWithValue, dispatch}) => {
+        const response = await fetch(`${apiHost}/api/users/${username}/points`, {
+            credentials: 'include',
+            method: 'GET'
+        });
+        if (!response.ok)
+            return rejectWithValue({text: await response.text(), code: response.status});
+        return await response.json();
+    }
+);
+
 export const sendPoint = createAsyncThunk(
     'points/sendPoint',
     async (_, {getState, rejectWithValue, dispatch}) => {
@@ -41,8 +54,8 @@ const pointSlice = createSlice({
             x: '-3',
             y: '0',
             r: '1',
-            windowWidth: 0
         },
+        windowWidth: 0,
         error: null
     },
     reducers: {
@@ -70,7 +83,7 @@ const pointSlice = createSlice({
             console.log(`store: r changed to ${state.currentPoint.r}`);
         },
         changeWindowWidth(state, action) {
-            state.currentPoint.windowWidth = action.payload.windowWidth;
+            state.windowWidth = action.payload.windowWidth;
         }
     },
     extraReducers: (builder) => {
@@ -81,8 +94,17 @@ const pointSlice = createSlice({
         builder.addCase(fetchPoints.rejected, (state, action) => {
             state.error = action.payload;
         })
+
         builder.addCase(sendPoint.rejected, (state, action) => {
             state.error = action.payload
+        })
+
+        builder.addCase(fetchUsersPoints.rejected, (state, action) => {
+            state.error = action.payload;
+        })
+        builder.addCase(fetchUsersPoints.fulfilled, (state, action) => {
+            state.points = action.payload;
+            state.fetchingError = null;
         })
     }
 });

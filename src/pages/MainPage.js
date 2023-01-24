@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect} from 'react'
 import styles from "../common.module.scss"
 import Header from "../components/Header";
 import Card from "react-toolbox/lib/card";
@@ -9,10 +9,9 @@ import Graph from "../components/Graph";
 import HistoryTable from "../components/HistoryTable";
 import {useDispatch, useSelector} from "react-redux";
 import {changeCurrentR, changeCurrentX, changeCurrentY, clearError, fetchPoints, sendPoint} from "../store/pointSlice";
-import batmanImageRef from "../../resources/batman2.svg";
 import {useNavigate} from "react-router-dom";
 import StatusDisplay from "../components/StatusDisplay";
-import {clear} from "localforage";
+import {batmanImage} from "../utils";
 
 const X_VALUES = ["-3", "-2", "-1", "0", "1", "2", "3", "4", "5"];
 const R_VALUES = ["1", "2", "3", "4", "5"];
@@ -23,8 +22,6 @@ const MainPage = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const batmanImage = new Image();
-    batmanImage.src = batmanImageRef;
     useEffect(() => {
         dispatch(fetchPoints());
     }, []);

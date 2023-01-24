@@ -1,3 +1,5 @@
+import batmanImageRef from "../resources/batman2.svg";
+
 // host options
 const apiHost = "http://localhost:3030"
 
@@ -5,6 +7,10 @@ const apiHost = "http://localhost:3030"
 const figuresColor = "#96aae7"
 const defaultColor = "#3c3c4d"
 const hitColor = "#de0d45"
+
+// Batman image
+const batmanImage = new Image();
+batmanImage.src = batmanImageRef;
 
 function drawDot(ctx, x, y, color) {
     ctx.fillStyle = color;
@@ -98,4 +104,4 @@ function getFrame() {
     return {sizeX, sizeY, centerX, centerY, halfRX, halfRY}
 }
 
-export {getFrame, drawCoordinatePlane, drawDot, defaultColor, hitColor, apiHost}
+export {getFrame, drawCoordinatePlane, drawDot, defaultColor, hitColor, apiHost, batmanImage}

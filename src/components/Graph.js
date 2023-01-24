@@ -22,6 +22,7 @@ const Graph = (props) => {
     );
 
     const redraw = () => {
+        console.log("redraw check...");
         if (!props.imageElement.complete)
             return;
         console.log("redraw");
